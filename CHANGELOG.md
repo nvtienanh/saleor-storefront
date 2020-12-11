@@ -4,6 +4,8 @@ All notable, unreleased changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+- Add language selector - #825 by @przlada
+
 ## 2.11.0
 
 - Add product hyperlink in cart page - #745 by @konstantinoschristomanos

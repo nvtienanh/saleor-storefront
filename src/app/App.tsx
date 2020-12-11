@@ -9,6 +9,7 @@ import {
   MetaConsumer,
   OverlayManager,
   OverlayProvider,
+  TopMenu,
 } from "../components";
 import ShopProvider from "../components/ShopProvider";
 import "../globalStyles/scss/index.scss";
@@ -26,6 +27,7 @@ const App: React.FC = () => {
     <ShopProvider>
       <OverlayProvider>
         <MetaConsumer />
+        <TopMenu demoMode={demoMode} />
         <MainMenu demoMode={demoMode} />
         <Routes />
         <Footer />

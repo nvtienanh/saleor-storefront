@@ -152,6 +152,9 @@ export const defaultTheme = {
     divisionLine: C.grayMedium,
     hoverBorder: C.blueDark,
   },
+  topMenu: {
+    height: "38px",
+  },
   typography: {
     baseFontFamily: C.baseFontFamily,
     /**

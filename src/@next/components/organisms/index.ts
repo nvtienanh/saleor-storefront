@@ -30,3 +30,4 @@ export * from "./AdyenPaymentGateway";
 export * from "./AddToCartSection";
 export * from "./PreferencesForm";
 export * from "./PreferencesFormModal";
+export * from "./TopMenu";

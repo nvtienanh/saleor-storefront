@@ -2,6 +2,7 @@ import React from "react";
 
 import { useAuth } from "@saleor/sdk";
 import { Loader } from "@components/atoms";
+import { TopMenu } from "@components/organisms";
 import { demoMode } from "@temp/constants";
 import {
   Footer,
@@ -9,7 +10,6 @@ import {
   MetaConsumer,
   OverlayManager,
   OverlayProvider,
-  TopMenu,
 } from "../components";
 import ShopProvider from "../components/ShopProvider";
 import "../globalStyles/scss/index.scss";
@@ -27,7 +27,7 @@ const App: React.FC = () => {
     <ShopProvider>
       <OverlayProvider>
         <MetaConsumer />
-        <TopMenu demoMode={demoMode} />
+        <TopMenu/>
         <MainMenu demoMode={demoMode} />
         <Routes />
         <Footer />

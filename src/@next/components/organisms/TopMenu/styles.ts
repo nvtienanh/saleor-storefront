@@ -15,7 +15,7 @@ export const BorderedWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   max-height: ${props => props.theme.topMenu.height};
-  padding: 1.5em 0;
+  // padding: 1.5em 0;
   background-image: ${props => `linear-gradient(
     to right,
     ${props.theme.colors.bannerEdge} 13%,

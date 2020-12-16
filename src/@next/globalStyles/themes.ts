@@ -153,7 +153,7 @@ export const defaultTheme = {
     hoverBorder: C.blueDark,
   },
   topMenu: {
-    height: "38px",
+    height: "40px",
   },
   typography: {
     baseFontFamily: C.baseFontFamily,

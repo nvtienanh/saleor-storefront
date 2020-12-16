@@ -203,6 +203,18 @@
   "@next_dot_components_dot_organisms_dot_ThankYou_dot_ThankYou_dot_3752098833": {
     "string": "ORDER DETAILS"
   },
+  "@next_dot_components_dot_organisms_dot_TopMenu_dot_TopMenu_dot_2367386033": {
+    "string": "API"
+  },
+  "@next_dot_components_dot_organisms_dot_TopMenu_dot_TopMenu_dot_3662390044": {
+    "string": "Dashboard"
+  },
+  "@next_dot_components_dot_organisms_dot_TopMenu_dot_TopMenu_dot_3791363157": {
+    "string": "SHOP EVENTS & SAVE UP TO <emphasis>65% OFF</emphasis>"
+  },
+  "@next_dot_components_dot_organisms_dot_TopMenu_dot_TopMenu_dot_818239529": {
+    "string": "Call us: <emphasis>0123456907</emphasis>"
+  },
   "@next_dot_components_dot_templates_dot_CartEmpty_dot_CartEmpty_dot_2488840083": {
     "string": "looks empty"
   },

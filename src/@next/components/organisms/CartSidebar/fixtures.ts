@@ -2,6 +2,7 @@ import {
   ICheckoutModelLine,
   ICheckoutModelLineVariant,
 } from "@saleor/sdk/lib/helpers";
+
 import { ITaxedMoney } from "@types";
 
 import productImage from "./productImage.png";
@@ -90,7 +91,6 @@ const ITEM_VARIANT = (id: string): ICheckoutModelLineVariant => ({
       __typename: "SelectedAttribute",
     },
   ],
-  isAvailable: true,
   quantityAvailable: 5,
   name: "The Great Square Table",
   sku: "R4ND-0M-5KU",

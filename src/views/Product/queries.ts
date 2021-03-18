@@ -1,4 +1,5 @@
 import gql from "graphql-tag";
+
 import { TypedQuery } from "../../core/queries";
 import {
   ProductDetails,
@@ -77,7 +78,6 @@ export const productVariantFragment = gql`
     id
     sku
     name
-    isAvailable
     quantityAvailable(countryCode: $countryCode)
     images {
       id
@@ -93,7 +93,7 @@ export const productVariantFragment = gql`
         ...Price
       }
     }
-    attributes {
+    attributes(variantSelection: VARIANT_SELECTION) {
       attribute {
         id
         name
@@ -117,7 +117,7 @@ export const productDetailsQuery = gql`
     product(id: $id, channel: $channel) {
       ...BasicProductFields
       ...ProductPricingField
-      descriptionJson
+      description
       category {
         id
         name

@@ -9,6 +9,7 @@ ARG SENTRY_APM
 ARG DEMO_MODE
 ARG GTM_ID
 ENV API_URI ${API_URI:-http://localhost:8000/graphql/}
+ENV NEXT_PUBLIC_API_URI ${API_URI}
 RUN API_URI=${API_URI} npm run build:export
 
 FROM nginx:stable

@@ -2,7 +2,11 @@ import { SaleorProvider } from "@saleor/sdk";
 import { ConfigInput } from "@saleor/sdk/lib/types";
 import { Integrations as ApmIntegrations } from "@sentry/apm";
 import * as Sentry from "@sentry/browser";
-import type { AppProps } from "next/app";
+import type {
+  AppContext as NextAppContext,
+  AppProps as NextAppProps,
+} from "next/app";
+import NextApp from "next/app";
 import Head from "next/head";
 import * as React from "react";
 import { positions, Provider as AlertProvider } from "react-alert";
@@ -13,10 +17,16 @@ import { NotificationTemplate } from "@components/atoms";
 import { ServiceWorkerProvider } from "@components/containers";
 import { defaultTheme, GlobalStyle } from "@styles";
 import { NextQueryParamProvider } from "@temp/components";
+import { getSaleorApi, getShopConfig, ShopConfig } from "@utils/ssr";
 
 import { version } from "../../package.json";
 import { App as StorefrontApp } from "../app";
-import { LocaleProvider } from "../components/Locale";
+import {
+  loadMessagesJson,
+  Locale,
+  LocaleMessages,
+  LocaleProvider,
+} from "../components/Locale";
 import {
   apiUrl,
   channelSlug,
@@ -26,8 +36,19 @@ import {
   ssrMode,
 } from "../constants";
 
+declare global {
+  interface Window {
+    __APOLLO_CLIENT__: any;
+  }
+}
+const attachClient = async () => {
+  const { apolloClient } = await getSaleorApi();
+  window.__APOLLO_CLIENT__ = apolloClient;
+};
+
 if (!ssrMode) {
   window.version = version;
+  if (process.env.NEXT_PUBLIC_ENABLE_APOLLO_DEVTOOLS === "true") attachClient();
 }
 
 if (process.env.GTM_ID) {
@@ -47,7 +68,16 @@ const saleorConfig: ConfigInput = { apiUrl, channel: channelSlug };
 
 const notificationConfig = { position: positions.BOTTOM_RIGHT, timeout: 2500 };
 
-const App = ({ Component, pageProps }: AppProps) => (
+type AppProps = NextAppProps & ShopConfig & { messages: LocaleMessages };
+
+const App = ({
+  Component,
+  pageProps,
+  footer,
+  mainMenu,
+  messages,
+  shopConfig,
+}: AppProps) => (
   <>
     <Head>
       <title>Demo PWA Storefront – Saleor Commerce</title>
@@ -62,11 +92,15 @@ const App = ({ Component, pageProps }: AppProps) => (
         {...notificationConfig}
       >
         <ServiceWorkerProvider timeout={serviceWorkerTimeout}>
-          <LocaleProvider>
+          <LocaleProvider messages={messages}>
             <GlobalStyle />
             <NextQueryParamProvider>
               <SaleorProvider config={saleorConfig}>
-                <StorefrontApp>
+                <StorefrontApp
+                  footer={footer}
+                  mainMenu={mainMenu}
+                  shopConfig={shopConfig}
+                >
                   <Component {...pageProps} />
                 </StorefrontApp>
               </SaleorProvider>
@@ -77,5 +111,26 @@ const App = ({ Component, pageProps }: AppProps) => (
     </ThemeProvider>
   </>
 );
+
+// Fetch shop config only once and cache it.
+let shopConfig: ShopConfig | null = null;
+
+App.getInitialProps = async (appContext: NextAppContext) => {
+  const {
+    router: { locale },
+  } = appContext;
+  const appProps = await NextApp.getInitialProps(appContext);
+  let messages: LocaleMessages;
+
+  if (ssrMode) {
+    if (!shopConfig) {
+      shopConfig = await getShopConfig();
+    }
+
+    messages = await loadMessagesJson(locale as Locale);
+  }
+
+  return { ...appProps, ...shopConfig, messages };
+};
 
 export default App;
